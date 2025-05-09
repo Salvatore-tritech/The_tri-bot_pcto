@@ -15,7 +15,7 @@ public class SkillsIpfy implements BotSkill {
             return "Il tuo IP pubblico è: " + getPublicIp();
         }
 
-        return null; // non richiama questa skill
+        return null;
     }
 
     private String getPublicIp() {

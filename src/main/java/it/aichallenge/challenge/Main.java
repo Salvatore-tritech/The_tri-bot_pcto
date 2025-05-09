@@ -6,6 +6,7 @@ import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
 import it.aichallenge.skills.SkillRegistry;
 import it.aichallenge.skills.SkillTime;
+import it.aichallenge.skills.SkillsIpfy;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,6 +18,7 @@ public class Main {
         ServerHttp.server();
         SkillRegistry skillRegistry = new SkillRegistry();
         skillRegistry.add(new SkillTime());
+        skillRegistry.add(new SkillsIpfy());
 
         var botst = new GroqClient(AiConfig.loadFromEnv());
 
