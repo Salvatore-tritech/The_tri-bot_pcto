@@ -6,6 +6,7 @@ import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
 import it.aichallenge.skills.SkillRegistry;
 import it.aichallenge.skills.SkillTime;
+import it.aichallenge.skills.SkillsIpfy;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,16 +18,17 @@ public class Main {
         ServerHttp.server();
         SkillRegistry skillRegistry = new SkillRegistry();
         skillRegistry.add(new SkillTime());
+        skillRegistry.add(new SkillsIpfy());
 
-        var llmClient = new GroqClient(AiConfig.loadFromEnv());
+        var botst = new GroqClient(AiConfig.loadFromEnv());
 
-        var bot = new SkillfulBot(skillRegistry, llmClient);
+        var botint = new SkillfulBot(skillRegistry, botst);
 
         System.out.println("AI Challenge Bot – type something (Ctrl‑D to exit)");
         try (var in = new BufferedReader(new InputStreamReader(System.in))) {
             String line;
             while ((line = in.readLine()) != null) {
-                String reply = bot.reply(line);
+                String reply = botint.reply(line);
                 System.out.println("🤖 " + reply);
             }
         }
