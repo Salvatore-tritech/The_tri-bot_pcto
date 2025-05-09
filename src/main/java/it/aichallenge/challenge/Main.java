@@ -3,6 +3,7 @@ package it.aichallenge.challenge;
 import it.aichallenge.bot.SimpleBot;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
+import it.aichallenge.skills.GetRisposta;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -1,6 +1,7 @@
 package it.aichallenge.challenge;
 
 import com.sun.net.httpserver.HttpServer;
+import it.aichallenge.skills.GetRisposta;
 import it.aichallenge.skills.GetTime;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class Serverhttp {
 
 
         server.createContext("/time", GetTime::time);
+        server.createContext("/ip", GetRisposta::handle);
         server.setExecutor(null);
         server.start();
 
