@@ -15,7 +15,7 @@ import java.time.LocalTime;
 
 public class GetTime implements BotSkill{
 
-    //commento cipolloso
+    //commento
 
     public void getTime() throws IOException {
         int port = 8080;
