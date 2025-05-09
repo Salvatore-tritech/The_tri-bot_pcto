@@ -4,6 +4,7 @@ import it.aichallenge.bot.SimpleBot;
 import it.aichallenge.bot.SkillfulBot;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
+import it.aichallenge.skills.GetIpify;
 import it.aichallenge.skills.GetTime;
 import it.aichallenge.skills.SkillRegistry;
 
@@ -18,7 +19,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         SkillRegistry reg = new SkillRegistry()
                 .add(new GetTime())
-                .add(msg -> "/help".equals(msg) ? "Comandi: /time, /help" : null);
+                .add(new GetIpify())
+                .add(msg -> "/help".equals(msg) ? "Comandi: /data, /ip, /help" : null);
 
         //var bot = new SimpleBot(new GroqClient(AiConfig.loadFromEnv()));
         var smart = new SkillfulBot(reg, new GroqClient(AiConfig.loadFromEnv()));   //Bot skillato
