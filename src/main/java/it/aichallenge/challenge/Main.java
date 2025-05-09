@@ -1,7 +1,6 @@
 package it.aichallenge.challenge;
 
 import it.aichallenge.bot.Bot;
-import it.aichallenge.bot.SimpleBot;
 import it.aichallenge.bot.SkillfulBot;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
@@ -19,7 +18,8 @@ public class Main {
                 .add(new GetTime())
                 .add(new ActorSkill())
                 .add(new ricercaSkill())
-                .add(new SkillIpify());
+                .add(new SkillIpify())
+                .add(new GetDay());
 
 
         Bot bot = new SkillfulBot(registry, new GroqClient(AiConfig.loadFromEnv()));
