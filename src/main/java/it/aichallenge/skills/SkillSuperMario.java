@@ -2,27 +2,67 @@ package it.aichallenge.skills;
 
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class SkillSuperMario implements BotSkill{
     private static boolean flag = false;
+    private static String carattere;
+    private static final String personaggio = "Super%20Mario";
 
     @Override
     public String tryReply(String userMessage) {
+        GroqClient groq = new GroqClient(AiConfig.loadFromEnv());
         if (userMessage.equals("/superMario")){
             flag = !flag;
+            if (flag) {
+                HttpRequest richiesta = HttpRequest.newBuilder(
+                                URI.create("https://it.wikipedia.org/w/api.php?action=query&list=search&srsearch="+personaggio+"&format=json"))
+                        .GET()
+                        .build();
+                String responseBody = null;
+                try {
+                    responseBody = HttpClient.newHttpClient()
+                            .send(richiesta, HttpResponse.BodyHandlers.ofString())
+                            .body();
+                } catch (IOException | InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                JSONObject jsonResponse = new JSONObject(responseBody);
+                JSONArray searchResults = jsonResponse
+                        .getJSONObject("query")
+                        .getJSONArray("search");
+
+                StringBuilder fullSnippet = new StringBuilder();
+
+                for (int i = 0; i < searchResults.length(); i++) {
+                    JSONObject item = searchResults.getJSONObject(i);
+                    String snippet = item.getString("snippet");
+                    fullSnippet.append(snippet).append(" ");
+                }
+
+                String descrizione = fullSnippet.toString()
+                        .replaceAll("<[^>]*>", "")
+                        .replace("&nbsp;", " ")
+                        .replace("&amp;", "&")
+                        .replace("&#039;", "'");
+
+                try {
+                    carattere = groq.chat("Data questa descrizione, rigenera in modo tale che ora il bot parli come questo personaggio" + descrizione);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             return (flag) ? "Da ora parlerò come super Mario":"Da ora non parlerò più come Super Mario";
         } else if (flag){
-            GroqClient groq = new GroqClient(AiConfig.loadFromEnv());
             try {
-                return groq.chat("Super Mario, l'idraulico più famoso del Regno dei Funghi, ha uno stile di comunicazione tutto suo, inconfondibile e carico di energia positiva. Quando parla, Mario è immediato, spontaneo e coinvolgente: utilizza frasi brevi, spesso esclamative, piene di entusiasmo e leggerezza. Le sue espressioni tipiche come “It’s-a me, Mario!” o “Let’s-a go!” sono diventate iconiche e trasmettono il suo spirito allegro e intraprendente.\n" +
-                        "\n" +
-                        "Il suo modo di parlare è influenzato da un marcato accento italo-inglese caricaturale, che riflette le sue origini italiane reinterpretate in chiave videoludica. Questo accento lo rende simpatico, quasi comico, e facilmente riconoscibile da grandi e piccini.\n" +
-                        "\n" +
-                        "Per quanto riguarda la scrittura (quando scrive – perché Mario scrive poco e agisce molto), il suo stile sarebbe semplice, diretto e ricco di punti esclamativi. Usi frequenti di onomatopee (“Boing!”, “Yahoo!”, “Wahoo!”) e un tono sempre ottimista renderebbero i suoi testi energici e motivanti, come se stesse sempre per saltare dentro un nuovo livello!\n" +
-                        "\n" +
-                        "Insomma, Mario comunica con il cuore: non ha bisogno di discorsi lunghi o parole complesse per farsi capire. Il suo linguaggio è fatto di entusiasmo, gentilezza e azione… proprio come un buon eroe dovrebbe essere. Fingi di essere questo personaggio, e rispondi a questa domanda "+userMessage);
+                return groq.chat(carattere+". Fingi di essere questo personaggio, e rispondi a questa domanda "+userMessage);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

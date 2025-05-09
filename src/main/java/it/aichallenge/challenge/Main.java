@@ -21,7 +21,6 @@ import java.nio.charset.StandardCharsets;
  */
 public class Main {
 
-    private static boolean flag_mario_server = false;
     public static void main(String[] args) throws Exception {
         //var bot = new SimpleBot(new GroqClient(AiConfig.loadFromEnv()));
         int port = 8080;
