@@ -8,6 +8,7 @@ import it.aichallenge.config.AiConfig;
 import it.aichallenge.skills.ActorSkill;
 import it.aichallenge.skills.GetTime;
 import it.aichallenge.skills.SkillRegistry;
+import it.aichallenge.skills.ricercaSkill;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,7 +20,9 @@ public class Main {
         //var bot = new SimpleBot(new GroqClient(AiConfig.loadFromEnv()));
         SkillRegistry registry = new SkillRegistry()
                 .add(new GetTime())
-                .add(new ActorSkill());
+                .add(new ActorSkill())
+                .add(new ricercaSkill());
+
 
         Bot bot = new SkillfulBot(registry, new GroqClient(AiConfig.loadFromEnv()));
         System.out.println("AI Challenge Bot – type something (Ctrl‑D to exit)");

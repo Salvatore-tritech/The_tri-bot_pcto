@@ -47,17 +47,18 @@ public class ActorSkill implements BotSkill{
 
     @Override
     public String tryReply(String userMessage) {
-        if(!userMessage.contains("/")){
-            if(!attore){
-                return null;
-            }else{
-                return funzione(personaggioDaImpersonare);
-            }
-        }
-        this.attore = true;
-        String[] s = userMessage.split("/");
-        String nomePersonaggio = s[1];
-        System.out.println(nomePersonaggio);
-        return funzione(nomePersonaggio);
+        return null;
+//        if(!userMessage.contains("/")){
+//            if(!attore){
+//                return null;
+//            }else{
+//                return funzione(personaggioDaImpersonare);
+//            }
+//        }
+//        this.attore = true;
+//        String[] s = userMessage.split("/");
+//        String nomePersonaggio = s[1];
+//        System.out.println(nomePersonaggio);
+//        return funzione(nomePersonaggio);
     }
 }
