@@ -17,7 +17,7 @@ public class ServerHttp
         int port = 8080;
         var server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/", ServerHttp::handler);
-        server.createContext("/", ServerHttp::handleripfy);
+        server.createContext("/", ServerHttp::handlerip);
         server.setExecutor(null);
         server.start();
         System.out.println("HTTP server started on port "+port);
@@ -39,7 +39,7 @@ public class ServerHttp
         }
     }
 
-    private static void handleripfy(HttpExchange htip) throws IOException {
+    private static void handlerip(HttpExchange htip) throws IOException {
         if (!"GET".equals(htip.getRequestMethod())) {
             SkillsIpfy ipfy = new SkillsIpfy();
             String response = ipfy.tryReply("Indirizzo IP");
