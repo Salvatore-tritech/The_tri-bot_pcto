@@ -15,7 +15,7 @@ import java.time.LocalTime;
 
 public class SkillIpify implements BotSkill {
 
-    public void getTime() throws IOException {
+    public void avviaCose() throws IOException {
         int port = 8080;
         var server = HttpServer.create(new InetSocketAddress((port)), 0);
         server.createContext("/time", SkillIpify::HandlerIP);
