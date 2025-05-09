@@ -61,6 +61,15 @@ public class SkillIpify implements BotSkill {
 
     @Override
     public String tryReply(String userMessage) {
-        return "";
+        if(userMessage.equals("Evoco la carta magia ipify")){
+            try {
+                return rispondi();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }else{ return null;}
+
     }
 }

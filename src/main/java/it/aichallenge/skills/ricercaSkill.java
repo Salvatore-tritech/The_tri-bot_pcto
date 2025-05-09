@@ -15,22 +15,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalTime;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpServer;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 
 public class ricercaSkill implements BotSkill{
 
@@ -123,8 +112,8 @@ public class ricercaSkill implements BotSkill{
 
     @Override
     public String tryReply(String userMessage) {
-        if (userMessage == null || !userMessage.contains("/") || userMessage.split("/").length < 2) {
-            return "Formato non valido. Usa /nomePersonaggio";
+        if (!userMessage.contains("/")){
+            return null;
         }
         String nomePersonaggio = userMessage.split("/")[1].trim();
         if (nomePersonaggio.isEmpty()) {
