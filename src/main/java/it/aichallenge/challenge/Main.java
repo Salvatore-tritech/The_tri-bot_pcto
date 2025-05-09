@@ -45,7 +45,7 @@ public class Main {
             httpExchange.sendResponseHeaders(405, -1);
             return;
         }
-            String response = new IpifySkill().tryReply("/ipify");
+            String response = new IpifySkill().tryReply("ipify");
 
             byte[] bytes = response.getBytes();
 
