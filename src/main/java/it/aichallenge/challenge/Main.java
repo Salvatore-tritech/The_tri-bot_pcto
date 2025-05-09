@@ -5,6 +5,7 @@ import it.aichallenge.bot.SkillfulBot;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
 import it.aichallenge.skills.SkillRegistry;
+import it.aichallenge.skills.SkillRihanna;
 import it.aichallenge.skills.SkillTime;
 import it.aichallenge.skills.SkillsIpfy;
 
@@ -19,6 +20,7 @@ public class Main {
         SkillRegistry skillRegistry = new SkillRegistry();
         skillRegistry.add(new SkillTime());
         skillRegistry.add(new SkillsIpfy());
+        skillRegistry.add(new SkillRihanna());
 
         var botst = new GroqClient(AiConfig.loadFromEnv());
 
