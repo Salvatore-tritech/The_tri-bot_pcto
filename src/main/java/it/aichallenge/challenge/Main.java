@@ -1,9 +1,9 @@
 package it.aichallenge.challenge;
 
-import it.aichallenge.bot.SimpleBot;
 import it.aichallenge.bot.SkillfulBot;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
+import it.aichallenge.skills.SkillIpify;
 import it.aichallenge.skills.SkillRegistry;
 import it.aichallenge.skills.SkillTime;
 
@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // var bot = new SimpleBot(new GroqClient(AiConfig.loadFromEnv()));
         var aiClient = new GroqClient(AiConfig.loadFromEnv());
-        var skillRegistry = new SkillRegistry().add(new SkillTime());
+        var skillRegistry = new SkillRegistry().add(new SkillTime()).add(new SkillIpify());
         var bot = new SkillfulBot(skillRegistry,aiClient);
 
 
