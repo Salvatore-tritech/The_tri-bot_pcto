@@ -1,19 +1,20 @@
-package it.aichallenge.skills;
+package it.aichallenge.challenge;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import it.aichallenge.skills.SkillTime;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
-public class SkillTimeEndPoint
+public class ServerHttp
 {
-    private static void main(String[] args) throws IOException
+    public static void server(String[] args) throws IOException
     {
         int port = 8080;
         var server = HttpServer.create(new InetSocketAddress(port), 0);
-        server.createContext("/", SkillTimeEndPoint::handler);
+        server.createContext("/", ServerHttp::handler);
         server.setExecutor(null);
         server.start();
         System.out.println("HTTP server started on port "+port);
@@ -24,11 +25,16 @@ public class SkillTimeEndPoint
             httpExchange.sendResponseHeaders(405, -1);
             return;
         }
-        String response = "Ora attuale: ";
+        SkillTime skill = new SkillTime();
+        String response = skill.tryReply("Che ora è?");
+        if (response == null)
+        {
+            response = "Nessuna risposta disponibile.";
+        }
         byte[] bytes = response.getBytes();
         httpExchange.sendResponseHeaders(200,bytes.length);
         OutputStream os = (httpExchange.getResponseBody());
         os.write(bytes);
-        httpExchange.close();
+        os.close();
     }
 }
