@@ -12,7 +12,6 @@ public class SkillTime implements BotSkill{
        if(lower.contains("che ore sono")||lower.contains("orario")){
            LocalTime now =LocalTime.now();
            DateTimeFormatter formatter= DateTimeFormatter.ofPattern("HH:mm:ss");
-
            return " sono le "+ now.format(formatter);
        }
         return null;
