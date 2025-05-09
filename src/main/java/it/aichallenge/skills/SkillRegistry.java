@@ -17,6 +17,9 @@ public class SkillRegistry {
      */
     public SkillRegistry add(BotSkill skill) {
         skills.add(skill);
+        GetTime skil=new GetTime();
+        skills.add(skil);
+
         return this;
     }
 

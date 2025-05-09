@@ -16,8 +16,6 @@ public class SimpleBot implements Bot {
     @Override
     public String reply(String userMessage) throws Exception {
 
-        GetTime tempo=new GetTime();
-        tempo.tryReply(userMessage);
         return client.chat(userMessage);
     }
 
