@@ -1,0 +1,25 @@
+name: MavenCI
+
+on:
+  push:
+    branches: [ "main" ]          # cambia se il tuo branch di default ha un altro nome
+  pull_request:
+    branches: [ "main" ]          # costruisce anche le PR verso main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 11 and cache Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 11
+          cache: maven            # abilita il restore dell’home~/.m2 automatico
+
+      - name: Run unit tests
+        run: mvn -B verify         # -B = batch‑mode, più pulito nei log
