@@ -1,6 +1,5 @@
 package it.aichallenge.challenge;
 
-import it.aichallenge.bot.SimpleBot;
 import it.aichallenge.bot.SkillfulBot;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
