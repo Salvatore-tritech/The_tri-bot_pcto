@@ -29,6 +29,7 @@ public class SimpleBot implements Bot {
             this.ipify = new SkillIpify();
             this.ipify.avviaCose();
             return ipify.rispondi();
+            //sembra funzioni
         }
         return client.chat(userMessage);
 
