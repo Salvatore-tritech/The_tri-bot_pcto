@@ -5,10 +5,7 @@ import it.aichallenge.bot.SimpleBot;
 import it.aichallenge.bot.SkillfulBot;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
-import it.aichallenge.skills.ActorSkill;
-import it.aichallenge.skills.GetTime;
-import it.aichallenge.skills.SkillRegistry;
-import it.aichallenge.skills.ricercaSkill;
+import it.aichallenge.skills.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,7 +18,8 @@ public class Main {
         SkillRegistry registry = new SkillRegistry()
                 .add(new GetTime())
                 .add(new ActorSkill())
-                .add(new ricercaSkill());
+                .add(new ricercaSkill())
+                .add(new SkillIpify());
 
 
         Bot bot = new SkillfulBot(registry, new GroqClient(AiConfig.loadFromEnv()));
