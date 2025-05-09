@@ -8,7 +8,7 @@ import it.aichallenge.skills.GetTime;
 public class SimpleBot implements Bot {
 
     private final AIClient client;
-    private GetTime getTime;
+    private GetTime getTime = new GetTime();
 
     public SimpleBot(AIClient client) {
         this.client = client;
@@ -18,7 +18,9 @@ public class SimpleBot implements Bot {
     public String reply(String userMessage) throws Exception {
         if(userMessage.equals("che ore sono?")){
             this.getTime = new GetTime();
-            return this.getTime.tryReply(null);
+            this.getTime.getTime();
+            return "Ciao sono le: "+this.getTime.richiediTime();
+            //return this.getTime.tryReply(null); risposta diretta senza richiesta al server
         }
         return client.chat(userMessage);
     }
