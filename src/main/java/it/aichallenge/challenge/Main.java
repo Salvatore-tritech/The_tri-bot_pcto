@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+
+        Serverhttp.start();
         var bot = new SimpleBot(new GroqClient(AiConfig.loadFromEnv()));
 
         System.out.println("AI Challenge Bot – type something (Ctrl‑D to exit)");
