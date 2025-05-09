@@ -1,5 +1,6 @@
 package it.aichallenge.skills;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,12 @@ public class SkillRegistry {
      */
     public String dispatch(String userMessage) {
         for (BotSkill s : skills) {
-            String out = s.tryReply(userMessage);
+            String out = null;
+            try {
+                out = s.tryReply(userMessage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             if (out != null) return out;   // missione compiuta, stop qui
         }
         return null;  // nessuna skill ha risposto

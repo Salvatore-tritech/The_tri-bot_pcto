@@ -1,5 +1,8 @@
 package it.aichallenge.skills;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 /**
  * Piccolo modulo agganciabile (“skill”) che può rispondere
  * direttamente a comandi chiari dell’utente
@@ -21,5 +24,5 @@ public interface BotSkill {
      *         {@code null} se vuole lasciare la palla
      *         ad altre skill o all’LLM.
      */
-    String tryReply(String userMessage);
+    String tryReply(String userMessage) throws IOException;
 }

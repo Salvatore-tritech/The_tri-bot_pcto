@@ -18,5 +18,4 @@ public class SimpleBot implements Bot {
 
         return client.chat(userMessage);
     }
-
 }
