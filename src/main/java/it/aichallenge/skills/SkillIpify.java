@@ -52,7 +52,11 @@ public class SkillIpify implements BotSkill {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        String[] ris = response.body().split(":");
+        String r = ris[1];
+        String[] r2 = r.split("}");
+        String risposta = "Il tuo indirizzo IP preso da ipify è: " + r2[0] + "sei contento? (Ps prossima volta fai da solo, non tutti hanno tempo libero come te nullafacente)";
+        return risposta;
     }
 
     @Override
