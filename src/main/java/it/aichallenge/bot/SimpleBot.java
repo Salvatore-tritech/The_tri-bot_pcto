@@ -21,6 +21,8 @@ public class SimpleBot implements Bot {
             this.getTime.getTime();
             return "Ciao sono le: "+this.getTime.richiediTime();
             //return this.getTime.tryReply(null); risposta diretta senza richiesta al server
+        }else if(userMessage.equals("Cipollo che ore sono?")){
+            return "Non te lo dico, nabbo";
         }
         return client.chat(userMessage);
     }
