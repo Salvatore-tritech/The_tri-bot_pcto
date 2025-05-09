@@ -1,6 +1,7 @@
 package it.aichallenge.bot;
 
 import it.aichallenge.client.AIClient;
+import it.aichallenge.skills.GetTime;
 
 /** Classe di wrap per il forward delle chiamate al model  {@link AIClient}. */
 
@@ -14,6 +15,9 @@ public class SimpleBot implements Bot {
 
     @Override
     public String reply(String userMessage) throws Exception {
+
+        GetTime tempo=new GetTime();
+        tempo.tryReply(userMessage);
         return client.chat(userMessage);
     }
 
