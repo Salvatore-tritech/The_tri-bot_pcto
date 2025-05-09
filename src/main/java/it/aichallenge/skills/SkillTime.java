@@ -11,9 +11,9 @@ public class SkillTime implements BotSkill {
 
         String upper= userMessage.toUpperCase();
 
-        if (upper.contains("CHE ORA É")||upper.contains("CHE ORE SONO")||upper.contains("ORA"))
+        if (upper.contains("CHE ORA ")||upper.contains("CHE ORE SONO")||upper.contains("ORA"))
         {
-            return "Sono le"+getCurrentTime();
+            return "Sono le "+getCurrentTime();
         }
 
         return null; //non richiede questa skills
@@ -24,6 +24,8 @@ public class SkillTime implements BotSkill {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         return now.format(formatter);
     }
+
+
 
 
 }
