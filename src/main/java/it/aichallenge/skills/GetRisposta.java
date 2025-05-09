@@ -32,6 +32,7 @@ public class GetRisposta implements BotSkill {
         String ip = getPublicIp();
         byte[] response = ip.getBytes();
         exchange.sendResponseHeaders(200, response.length);
+        exchange.close();
     }
 }
 
