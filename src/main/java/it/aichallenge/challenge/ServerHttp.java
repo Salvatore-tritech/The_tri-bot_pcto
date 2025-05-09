@@ -7,6 +7,7 @@ import it.aichallenge.skills.SkillTime;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.time.LocalTime;
 
 public class ServerHttp
 {
@@ -20,21 +21,19 @@ public class ServerHttp
         System.out.println("HTTP server started on port "+port);
     }
 
-    private static void handler(HttpExchange httpExchange) throws IOException {
-        if (!"GET".equals(httpExchange.getRequestMethod())) {
-            httpExchange.sendResponseHeaders(405, -1);
-            return;
+    private static void handler(HttpExchange htE) throws IOException {
+        if (!"GET".equals(htE.getRequestMethod())) {
+            LocalTime ora = LocalTime.now();
+            String tempo = String.valueOf(ora);
+
+            byte[] response = tempo.getBytes();
+            htE.sendResponseHeaders(200, response.length);
+
+            byte[] bytes =tempo.getBytes();
+
+            OutputStream as = htE.getResponseBody();
+            as.write(bytes);
+            htE.close();
         }
-        SkillTime skill = new SkillTime();
-        String response = skill.tryReply("Che ora è?");
-        if (response == null)
-        {
-            response = "Nessuna risposta disponibile.";
-        }
-        byte[] bytes = response.getBytes();
-        httpExchange.sendResponseHeaders(200,bytes.length);
-        OutputStream os = (httpExchange.getResponseBody());
-        os.write(bytes);
-        os.close();
     }
 }

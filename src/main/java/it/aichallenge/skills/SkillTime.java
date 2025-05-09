@@ -13,7 +13,7 @@ public class SkillTime implements BotSkill {
 
         if (upper.contains("CHE ORA É")||upper.contains("CHE ORE SONO")||upper.contains("ORA"))
         {
-            return "Sono le"+getCurrentTime();
+            return "Sono le "+getCurrentTime();
         }
 
         return null;
