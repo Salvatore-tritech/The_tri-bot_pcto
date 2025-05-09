@@ -9,7 +9,7 @@ public class SkillTime implements BotSkill{
    public String tryReply(String userMessage){
        if (userMessage == null)return null;
        String lower =userMessage.toLowerCase();
-       if(lower.contains("che ore sono")||lower.contains("orario") || lower.contains("che ora è")){
+       if(lower.contains("che ore sono")||lower.contains("orario")){
            LocalTime now =LocalTime.now();
            DateTimeFormatter formatter= DateTimeFormatter.ofPattern("HH:mm:ss");
 
