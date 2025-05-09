@@ -13,9 +13,10 @@ public class SkillTime implements BotSkill{
            LocalTime now =LocalTime.now();
            DateTimeFormatter formatter= DateTimeFormatter.ofPattern("HH:mm:ss");
 
-           return "sono le"+ now.format(formatter);
+           return " sono le"+ now.format(formatter);
        }
         return null;
    }
+
 }
 
