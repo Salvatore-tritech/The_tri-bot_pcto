@@ -60,6 +60,9 @@ public class GetTime implements BotSkill{
 
     @Override
     public String tryReply(String userMessage) {
+        if(!userMessage.equals("che ore sono?")){
+            return null;
+        }
         LocalTime myObj = LocalTime.now();
         String response = "Ciao sono le ore: " + myObj.toString();
         return response;
