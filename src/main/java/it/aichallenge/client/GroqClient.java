@@ -3,7 +3,11 @@ package it.aichallenge.client;
 import it.aichallenge.config.AiConfig;
 import it.aichallenge.client.AIClient;
 import okhttp3.*;
-import com.fasterxml.jackson.databind.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -11,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
-    Classe per la configurazione di connessione con groq e la gestione delle chiamate.
+ * Client per le API Groq Cloud (compatibile OpenAI)
  */
 public class GroqClient implements AIClient {
 
@@ -21,7 +25,10 @@ public class GroqClient implements AIClient {
             .callTimeout(Duration.ofSeconds(60))
             .build();
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    /** ObjectMapper configurato per ignorare i campi sconosciuti */
+    private final ObjectMapper mapper = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
     private final String url;
     private final String apiKey;
     private final String model;
@@ -38,6 +45,7 @@ public class GroqClient implements AIClient {
                 "model", model,
                 "messages", List.of(Map.of("role", "user", "content", prompt))
         );
+
         Request req = new Request.Builder()
                 .url(url)
                 .header("Authorization", "Bearer " + apiKey)
@@ -51,18 +59,26 @@ public class GroqClient implements AIClient {
             }
             assert res.body() != null;
             ChatResponse chat = mapper.readValue(res.body().byteStream(), ChatResponse.class);
-            return chat.choices[0].message.content;
+            return chat.choices.get(0).message.content;
         }
-
     }
 
-    /* ---------- DTOs (package‑private) ---------- */
+    /* ---------- DTOs (package-private) ---------- */
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     static class ChatResponse {
-        public Choice[] choices;
+        public List<Choice> choices;
     }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     static class Choice {
         public Message message;
+
+        @JsonProperty("finish_reason")
+        public String finishReason;
     }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     static class Message {
         public String role;
         public String content;
