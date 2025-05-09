@@ -5,6 +5,7 @@ import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
 import it.aichallenge.skills.GetIpify;
 import it.aichallenge.skills.GetTime;
+import it.aichallenge.skills.RoleplaySkill;
 import it.aichallenge.skills.SkillRegistry;
 
 import java.io.BufferedReader;
@@ -17,7 +18,8 @@ public class Main {
 
         SkillRegistry reg = new SkillRegistry()
                 .add(new GetTime())
-                .add(new GetIpify()); //per chiedere all'api basta aggiungere /ipify
+                .add(new GetIpify()) //per chiedere all'api basta aggiungere /ipify
+                .add(new RoleplaySkill(new GroqClient(AiConfig.loadFromEnv()))); //chiedere /act nomePersonaggioFamoso e /stop per farlo smettere
 
         var bot = new SkillfulBot(reg, new GroqClient(AiConfig.loadFromEnv()));
 
