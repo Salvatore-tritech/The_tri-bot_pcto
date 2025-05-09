@@ -1,6 +1,7 @@
 package it.aichallenge.bot;
 
 import it.aichallenge.client.AIClient;
+import it.aichallenge.skills.PersonalityManager;
 import it.aichallenge.skills.SkillRegistry;
 
 /**
@@ -22,6 +23,16 @@ public class SkillfulBot implements Bot {
     public String reply(String userMessage) throws Exception {
         // 1️⃣ prova con le skill locali
         String local = skills.dispatch(userMessage);
+
+        if(local!=null) return local;
+
+        String personality = PersonalityManager.getActivePersonality();
+        if(PersonalityManager.isDexterMode()){
+            userMessage= "Rispondi come se fossi Dexter Morgan di *Dexter*, usa il suo tono riflessivo e distaccatto. Domanda utente "+ userMessage;
+        }
+
+
+
 
         // 2️⃣ se nessuna skill ha risposto, delega al modello AI
         return (local != null) ? local : llm.chat(userMessage);
