@@ -6,10 +6,7 @@ import it.aichallenge.bot.SimpleBot;
 import it.aichallenge.bot.SkillfulBot;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
-import it.aichallenge.skills.IpifySkill;
-import it.aichallenge.skills.SkillRegistry;
-import it.aichallenge.skills.SkillSuperMario;
-import it.aichallenge.skills.SkillTime;
+import it.aichallenge.skills.*;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -27,12 +24,14 @@ public class Main {
         var server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/ipify/", Main::handler_ipify);
         server.createContext("/superMario/", Main::handler_superMario);
+        server.createContext("/movie/", Main::handler_movie);
         server.setExecutor(null);
         server.start();
         SkillRegistry skillRegistry = new SkillRegistry();
         skillRegistry.add(new SkillTime());
         skillRegistry.add(new IpifySkill());
         skillRegistry.add(new SkillSuperMario());
+        skillRegistry.add(new SkillMovie());
         var bot = new SkillfulBot(skillRegistry, new GroqClient(AiConfig.loadFromEnv()));
 
         System.out.println("AI Challenge Bot – type something (Ctrl‑D to exit)");
@@ -73,6 +72,25 @@ public class Main {
         String str = json.getString("message");
         String response = skillSuperMario.tryReply(str);
         skillSuperMario.tryReply("/superMario");
+        byte[] bytes = response.getBytes();
+
+        httpExchange.sendResponseHeaders(200, bytes.length);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(bytes);
+        httpExchange.close();
+    }
+
+    private static void handler_movie(HttpExchange httpExchange) throws IOException {
+        if (!httpExchange.getRequestMethod().equals("GET")) {
+            httpExchange.sendResponseHeaders(405, -1);
+            return;
+        }
+        SkillMovie skillMovie  = new SkillMovie();
+        InputStream input = httpExchange.getRequestBody();
+        String request = new String(input.readAllBytes(), StandardCharsets.UTF_8);
+        JSONObject json = new JSONObject(request);
+        String str = json.getString("movie");
+        String response = skillMovie.tryReply("/movie "+str);
         byte[] bytes = response.getBytes();
 
         httpExchange.sendResponseHeaders(200, bytes.length);
