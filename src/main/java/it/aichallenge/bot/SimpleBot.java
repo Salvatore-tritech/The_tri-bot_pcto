@@ -31,7 +31,7 @@ public class SimpleBot implements Bot {
             return ipify.rispondi();
             //sembra funzioni
         }else if(userMessage.equals("Cosa puoi fare?")){
-            return "1) Scrivi 'che ore sono?' e ti dirò il tuoi orario\n 2)Scrivi 'Evoco la carta magia: Ipify' e ti dirò l'indirizzo ip preso da ipify";
+            return "1) Scrivi 'che ore sono?' e ti dirò il tuoi orario\n 2) Scrivi 'Evoco la carta magia: Ipify' e ti dirò l'indirizzo ip preso da ipify";
         }
         return client.chat(userMessage);
 
