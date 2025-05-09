@@ -16,7 +16,7 @@ public class SkillTime implements BotSkill {
             return "Sono le"+getCurrentTime();
         }
 
-        return null; //non richiede questa skills
+        return null;
     }
 
     private String getCurrentTime() {
