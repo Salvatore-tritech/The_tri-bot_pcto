@@ -17,13 +17,13 @@ public class FaiPersonaggio implements BotSkill {
                 personaggioAttuale = "mario";
                 return "It's me, Mario! Let's-e go!";
             case "/steve":
-                personaggioAttuale = "mario";
+                personaggioAttuale = "steve";
                 return "I... am steve.";
             case "/papaleone":
-                personaggioAttuale = "mario";
+                personaggioAttuale = "papaleone";
                 return "Pax vobiscum";
             case "/toto":
-                personaggioAttuale = "mario";
+                personaggioAttuale = "toto";
                 return "Sono il dipendente più simpatico della Tritech!";
             case "/reset":
                 personaggioAttuale = null;
