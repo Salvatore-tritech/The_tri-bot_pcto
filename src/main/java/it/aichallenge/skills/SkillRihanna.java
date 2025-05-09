@@ -1,4 +1,3 @@
-
 package it.aichallenge.skills;
 
 public class SkillRihanna implements BotSkill{

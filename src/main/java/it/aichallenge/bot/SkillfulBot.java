@@ -12,6 +12,7 @@ public class SkillfulBot implements Bot {
 
     private final SkillRegistry skills;
     private final AIClient llm;
+    private String Personaggioslt = null;
 
     public SkillfulBot(SkillRegistry skills, AIClient llm) {
         this.skills = skills;
@@ -20,10 +21,40 @@ public class SkillfulBot implements Bot {
 
     @Override
     public String reply(String userMessage) throws Exception {
-        // 1️⃣ prova con le skill locali
-        String local = skills.dispatch(userMessage);
+        if (userMessage.startsWith("/")) {
+            String prompt = userMessage.substring(1).split(" ")[0].toUpperCase();
+            String PersonaggioFin = userMessage.substring(prompt.length() + 1).trim();
 
-        // 2️⃣ se nessuna skill ha risposto, delega al modello AI
-        return (local != null) ? local : llm.chat(userMessage);
+            switch (prompt) {
+                case "PLAY":
+                    if (!PersonaggioFin.isEmpty()) {
+                        Personaggioslt = PersonaggioFin;
+                        return ("Ok, ora mi comporterò come se fossi. Cosa vuoi chiedermi? "+ Personaggioslt);
+                    } else {
+                        return "Devi specificare un personaggio dopo /impersonifica. Esempio: /act Rihanna";
+                    }
+                case "RESET":
+                    Personaggioslt = null;
+                    return "Ok, torno a parlare normalmente.";
+                default:
+                    String local = skills.dispatch(userMessage);
+                    if (local != null) {
+                        return local;
+                    } else {
+                        return generaRisposta(userMessage);
+                    }
+            }
+        } else {
+            return generaRisposta(userMessage);
+        }
+    }
+
+    private String generaRisposta(String userMessage) throws Exception {
+        if (Personaggioslt != null) {
+            String prompt = "Rispondi alla seguente domanda come se fossi " + Personaggioslt + ":\n\n" + userMessage;
+            return llm.chat(prompt);
+        } else {
+            return llm.chat(userMessage);
+        }
     }
 }

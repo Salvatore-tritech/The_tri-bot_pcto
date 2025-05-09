@@ -16,15 +16,15 @@ public class ServerHttp
     {
         int port = 8080;
         var server = HttpServer.create(new InetSocketAddress(port), 0);
-        server.createContext("/", ServerHttp::handler);
-        server.createContext("/", ServerHttp::handleripfy);
+        server.createContext("/time", ServerHttp::handler);
+        server.createContext("/ip", ServerHttp::handleripfy);
         server.setExecutor(null);
         server.start();
         System.out.println("HTTP server started on port "+port);
     }
 
     private static void handler(HttpExchange htE) throws IOException {
-        if (!"GET".equals(htE.getRequestMethod())) {
+        if ("GET".equals(htE.getRequestMethod())) {
             LocalTime ora = LocalTime.now();
             String tempo = String.valueOf(ora);
 
@@ -40,7 +40,7 @@ public class ServerHttp
     }
 
     private static void handleripfy(HttpExchange htip) throws IOException {
-        if (!"GET".equals(htip.getRequestMethod())) {
+        if ("GET".equals(htip.getRequestMethod())) {
             SkillsIpfy ipfy = new SkillsIpfy();
             String response = ipfy.tryReply("Indirizzo IP");
             if (response == null) {
