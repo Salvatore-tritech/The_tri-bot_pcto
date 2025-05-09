@@ -21,6 +21,16 @@ public class Main {
 
         var bot = new SkillfulBot(reg, new GroqClient(AiConfig.loadFromEnv()));
 
+        Thread botServerThread = new Thread(() -> {
+            try {
+                BotServer.main(new String[0]);  // Avvia il server BotServer
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        botServerThread.start();
+
         System.out.println("AI Challenge Bot – type something (Ctrl‑D to exit)");
         try (var in = new BufferedReader(new InputStreamReader(System.in))) {
             String line;
