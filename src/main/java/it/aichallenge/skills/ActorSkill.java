@@ -1,7 +1,6 @@
 package it.aichallenge.skills;
 
 import it.aichallenge.bot.SimpleBot;
-import it.aichallenge.client.AIClient;
 import it.aichallenge.client.GroqClient;
 import it.aichallenge.config.AiConfig;
 
@@ -49,7 +48,11 @@ public class ActorSkill implements BotSkill{
     @Override
     public String tryReply(String userMessage) {
         if(!userMessage.contains("/")){
-            return null;
+            if(!attore){
+                return null;
+            }else{
+                return funzione(personaggioDaImpersonare);
+            }
         }
         this.attore = true;
         String[] s = userMessage.split("/");
