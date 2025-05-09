@@ -41,15 +41,15 @@ public class SkillfulBot implements Bot {
                     if (local != null) {
                         return local;
                     } else {
-                        return generaRisposta(userMessage);
+                        return genRisposta(userMessage);
                     }
             }
         } else {
-            return generaRisposta(userMessage);
+            return genRisposta(userMessage);
         }
     }
 
-    private String generaRisposta(String userMessage) throws Exception {
+    private String genRisposta(String userMessage) throws Exception {
         if (Personaggioslt != null) {
             String prompt = "Rispondi alla seguente domanda come se fossi " + Personaggioslt + ":\n\n" + userMessage;
             return llm.chat(prompt);
