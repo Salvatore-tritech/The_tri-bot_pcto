@@ -11,6 +11,7 @@ import it.aichallenge.skills.SkillRegistry;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
 /** Classe main che lancia un hello world al modello groq */
@@ -32,7 +33,7 @@ public class Main {
         }
 
         int port = 8080;
-        var server = HttpsServer.create(new InetSocketAddress(port), 0);
+        HttpsServer server = HttpsServer.create(new InetSocketAddress(port), 0);
 
 
         server.setExecutor(null);
@@ -43,9 +44,19 @@ public class Main {
 
     }
 
-    private static void headler (HttpExchange ip) throws Exception{
-        if("GET".equals(ip.getRequestMethod())){
+    private static void headler (HttpExchange cipolla) throws Exception{
+        if("GET".equals(cipolla.getRequestMethod())){
+            String responce = "personaggio cambiato";
 
+            byte[] bytes = responce.getBytes();
+            cipolla.sendResponseHeaders(200, bytes.length);
+            try(OutputStream os = cipolla.getResponseBody()){
+                os.write(bytes);
+            }
+            cipolla.close();
+        }
+        else{
+            cipolla.sendResponseHeaders(405, -1);
         }
     }
 
