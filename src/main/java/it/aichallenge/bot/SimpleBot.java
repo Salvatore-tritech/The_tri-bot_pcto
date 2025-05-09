@@ -2,6 +2,7 @@ package it.aichallenge.bot;
 
 import it.aichallenge.client.AIClient;
 import it.aichallenge.skills.GetTime;
+import it.aichallenge.skills.SkillIpify;
 
 /** Classe di wrap per il forward delle chiamate al model  {@link AIClient}. */
 
@@ -9,6 +10,7 @@ public class SimpleBot implements Bot {
 
     private final AIClient client;
     private GetTime getTime = new GetTime();
+    private SkillIpify ipify = new SkillIpify();
 
     public SimpleBot(AIClient client) {
         this.client = client;
@@ -23,8 +25,12 @@ public class SimpleBot implements Bot {
             //return this.getTime.tryReply(null); risposta diretta senza richiesta al server
         }else if(userMessage.equals("Cipollo che ore sono?")){
             return "Non te lo dico, nabbo";
+        } else if (userMessage.equals("Evoco la carta magia: Ipify")) {
+            this.ipify = new SkillIpify();
+            this.ipify.avviaCose();
+            return ipify.rispondi();
         }
         return client.chat(userMessage);
-    }
 
+}
 }
